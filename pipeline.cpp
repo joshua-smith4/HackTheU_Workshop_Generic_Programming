@@ -39,7 +39,7 @@ float sigmoid(double logits)
     return exponential / (1.0 + exponential);
 }
 
-bool isCat(double prob) { return prob >= 0.5; }
+bool isCat(float prob) { return prob >= 0.5; }
 
 int main()
 {
@@ -48,7 +48,8 @@ int main()
     double bias = 1.4;
     std::cout << "Is it a cat?\n";
 
-    /*
+    /* This is application specific code that can an should be abstracted
+     * 
     auto bound_dotproduct = std::bind(dotproduct, std::cref(weights), std::placeholders::_1);
     auto product = bound_dotproduct(cat_data);
     auto bound_add = std::bind(add, std::placeholders::_1, bias);
@@ -64,7 +65,7 @@ int main()
             sigmoid,
             isCat);
 
-    std::cout << "The answer is: " << std::boolalpha << itIsACat << "\n";
+    std::cout << "The answer is: " << (itIsACat ? "YES!" : "Sadly, no") << "\n";
 
     return 0;
 }
