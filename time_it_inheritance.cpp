@@ -6,6 +6,9 @@
 template <class CallableType>
 class Timeable {};
 
+/*
+ * Inherit from this class if you want to time yourself!
+ */
 template <class ReturnType, class... ArgsTypePack>
 class Timeable<ReturnType(ArgsTypePack...)>
 {
@@ -19,10 +22,22 @@ public:
         return retVal;
     }
 private:
+    /*
+     * pure virtual function to be timed
+     * This function is implemented by the derived class
+     */
     virtual ReturnType timed_function(ArgsTypePack...) = 0;
+
+    /*
+     * function used as a log callback for the duration
+     * pure virtual
+     */
     virtual void log_callback(long long) = 0;
 };
 
+/*
+ * Example of a class that inherits from Timeable
+ */
 template <class ContainerType>
 class GetMaxElement : public Timeable<typename ContainerType::value_type(ContainerType const&)>
 {
