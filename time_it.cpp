@@ -155,27 +155,28 @@ int main()
      * desires to interface with it.
      */
     auto v = std::vector<int>{1,2,3,4,5,6,7,8,9};
-    auto s = std::set<double>{1,2,3,4,5,6,7,8,9};
-    auto us = std::unordered_set<float>{1,2,3,4,5,6,7,8,9};
+    auto s = std::set<double>{12,4,2,9,45,7,1};
+    auto us = std::unordered_set<float>{7,10,43,7,93,100,1,3};
 
     auto v_max = timeFindMax(v);
     auto s_max = timeFindMax(s);
     auto us_max = timeFindMax(us);
+    std::cout << "Found max values: " << *v_max << " (vector), " << *s_max << " (set), " << *us_max << " (unordered_set)\n";
 
     auto v_max_func = [&v](){ return std::max_element(v.begin(), v.end()); };
-    auto v_max_iter = timeFunction(v_max_func);
+    timeFunction(v_max_func);
 
     auto s_min_func = MinElementCallableObject(s);
-    auto s_min_iter = timeFunction(s_min_func);
+    timeFunction(s_min_func);
 
     auto log_func = [](auto t)
     { 
         std::cout << "nanoseconds: " 
-        << std::chrono::duration_cast<std::chrono::nanoseconds>(t).count() << "\n"; 
+            << std::chrono::duration_cast<std::chrono::nanoseconds>(t).count() << "\n"; 
     };
     auto us_min_func = MinElementCallableObject(us);
-    auto us_min_iter = timeFunction(log_func, us_min_func);
+    timeFunction(log_func, us_min_func);
 
-    auto us_max_iter = timeFunction(log_func, std::max_element<decltype(us)::iterator>, us.begin(), us.end());
+    timeFunction(log_func, std::max_element<decltype(us)::iterator>, us.begin(), us.end());
     return 0;
 }

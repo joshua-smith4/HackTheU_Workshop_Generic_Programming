@@ -15,7 +15,7 @@ public:
         auto start = std::chrono::steady_clock::now();
         auto retVal = timed_function(std::forward<ArgsTypePack&&>(args)...);
         auto end = std::chrono::steady_clock::now();
-        log_callback(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count());
+        log_callback(std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count());
         return retVal;
     }
 private:
@@ -38,7 +38,7 @@ private:
     }
     virtual void log_callback(long long d) override final
     {
-        std::cout << "Microseconds: " << d << "\n";
+        std::cout << "Nanoseconds: " << d << "\n";
     }
 };
 
@@ -46,7 +46,6 @@ int main()
 {
     auto v = std::vector<int>{1,2,3,4,5,6,7,8,9};
     auto timeableMaxElementObject = GetMaxElement<decltype(v)>();
-    auto v_max = timeableMaxElementObject.timeIt(v);
-    std::cout << v_max << "\n";
+    timeableMaxElementObject.timeIt(v);
 }
 
